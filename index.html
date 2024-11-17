@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メモ帳リスト</title>
+</head>
+<style>
+    body {
+       font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f4f4f4;
+    }
+
+    h3 {
+        color: #333;
+    }
+
+    div {
+        margin-bottom: 20px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    input[type = "text"], textarea {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    button {
+        padding: 10px 15px;
+        background-color: #007Bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding:10px;
+        
+
+    }
+
+</style>
+<body>
+    <div>
+        <h3>メモ帳</h3>
+        メモのタイトル<input type="text" id="id-title">
+        <div></div>
+        メモの内容<textarea name="" id="id-body"></textarea>
+        <div></div>
+        <button id="id-add-button">メモを登録する</button>    
+    </div>
+    <div>
+        <h3>メモの一覧</h3>
+        <button>削除する</button>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">-</th>
+                    <th scope="col">タイトル</th>
+                    <th scope="col">作成日</th>
+                    <th scope="col">更新日</th>
+                    <th scope="col">編集</th>
+                </tr>
+            </thead>
+            <tbody id="id-memo-list">
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+                <td><button>編集</button></td>
+              </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+    let titleElement = document.getElementById("id-title")
+    let bodyElement = document.getElementById("id-body")
+
+    let addButton = document.getElementById("id-add-button")
+    addButton.addEventListener("click", (event) => {
+        let title = titleElement.value
+        let body = bodyElement.value
+        //メモを作成した日付
+        const now = new Date();
+        const nowYear = now.getFullYear(); 
+        const nowMon = now.getMonth() + 1;
+        const nowDate = now.getDate();
+        const editDate = `${nowYear}/${nowMon}/${nowDate}`
+       
+        //新しい行を生成
+        let tr = document.createElement("tr");
+       
+        //各セルを作成
+        let checkBoxTd = document.createElement("td");
+        let checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkBoxTd.appendChild(checkbox);
+        tr.appendChild(checkBoxTd);
+
+        let titleTd = document.createElement("td");
+        titleTd.textContent = title;
+        tr.appendChild(titleTd);
+
+        let dateTd = document.createElement("td");
+        dateTd.textContent = editDate;
+        tr.appendChild(dateTd);
+
+        let updateTd = document.createElement("td");
+        updateTd.textContent = editDate;
+        tr.appendChild (updateTd);
+
+        let editButtonTd = document.createElement("td");
+        let editButton = document.createElement("button");
+        editButton.textContent = "編集";
+        editButtonTd.appendChild(editButton);
+        tr.appendChild(editButtonTd);
+
+        //メモリストに追加
+        let memoList = document.getElementById("id-memo-list");
+        memoList.appendChild(tr);
+
+        //入力フィールドを更新
+        titleElement.value = "";
+        bodyElement.value = "";
+
+        
+    })
+</script>
+</html>
